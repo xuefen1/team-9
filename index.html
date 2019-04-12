@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrap>p{
+            width:60px;
+            height:30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .wrap i{
+            width:10px;
+            height:10px;
+            background:#eee;
+            border-radius:100%;
+        }
+        .wrap>ul>li{
+            width:60px;
+            height:30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .wrap .active{
+            background:red;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <p @click="checkAllFn"><i :class = "{active:flagAll}"></i>全选</p>
+        <ul>
+            <li v-for="(item,index) in data" @click="checkFn(index)"><i :class="{active:item.isFlag}"></i>{{item.name}}</li>
+        </ul>
+    </div>
+    <script src = "vue.min.js"></script>
+    <script>
+        let vm = new Vue({
+            el:".wrap",
+            data:{
+                data:[
+                    {
+                        name:"苹果",
+                        isFlag:false
+                    },
+                    {
+                        name:"香蕉",
+                        isFlag:false
+                    },
+                    {
+                        name:"桔子",
+                        isFlag:false
+                    },
+                    {
+                        name:"草莓",
+                        isFlag:false
+                    }
+                ],
+                flagAll:false
+            },
+            methods:{
+                checkFn(index){
+                    this.data[index].isFlag = ! this.data[index].isFlag;
+                    this.flagAll = this.data.every(el => el.isFlag);
+                },
+                checkAllFn(){
+                    this.flagAll = !this.flagAll;
+                    this.data.map(el => el.isFlag = this.flagAll)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
